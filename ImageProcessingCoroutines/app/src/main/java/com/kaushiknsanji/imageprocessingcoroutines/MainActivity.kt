@@ -39,8 +39,17 @@ class MainActivity : AppCompatActivity() {
                 uiCoroutineScope.async(Dispatchers.IO) { getOriginalBitmap() }
             // Wait for the Bitmap to be downloaded
             val downloadedBitmap = originalBitmapDeferred.await()
-            // Set the Bitmap onto the ImageView
-            loadImage(downloadedBitmap)
+
+            // Start a Coroutine to get the Deferred result of applying the grey filter
+            // on the downloaded bitmap
+            val processedBitmapDeferred = uiCoroutineScope.async(Dispatchers.Default) {
+                downloadedBitmap.greyFilter()
+            }
+            // Wait for the grey filter processing to complete
+            val processedBitmap = processedBitmapDeferred.await()
+
+            // Set the processed Bitmap onto the ImageView
+            loadImage(processedBitmap)
         }
     }
 
@@ -52,7 +61,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     /**
-     * Sets the downloaded [bitmap][Bitmap] onto the ImageView.
+     * Sets the processed [bitmap][Bitmap] onto the ImageView.
      */
     private fun loadImage(bitmap: Bitmap) {
         // Hide the Progress spinner
