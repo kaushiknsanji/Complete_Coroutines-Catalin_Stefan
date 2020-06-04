@@ -2,7 +2,9 @@ package com.kaushiknsanji.coroutinesretrofit.viewmodel
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kaushiknsanji.coroutinesretrofit.model.CountriesService
 import com.kaushiknsanji.coroutinesretrofit.model.Country
+import kotlinx.coroutines.*
 
 /**
  * [ViewModel] subclass for [com.kaushiknsanji.coroutinesretrofit.view.MainActivity]
@@ -20,6 +22,17 @@ class ListViewModel : ViewModel() {
     // LiveData for data loading progress indication
     val loading = MutableLiveData<Boolean>()
 
+    // Retrofit API for the Countries API service
+    private val countriesService = CountriesService.getCountriesService()
+
+    // Coroutine Job instance to download the data from the API
+    private var job: Job? = null
+
+    // Exception Handler for the Coroutine
+    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+        onError("Exception: ${throwable.localizedMessage}")
+    }
+
     /**
      * Called when Activity is created, to reload the content
      */
@@ -34,35 +47,32 @@ class ListViewModel : ViewModel() {
         // Start the [loading] indication
         loading.value = true
 
-        // Get the countries information
-        val dummyData = generateDummyCountries()
+        // Start a Coroutine Scope in the UI Dispatcher, with custom exception handler and save its job
+        job = CoroutineScope(Dispatchers.Main + exceptionHandler).launch {
+            // Get the countries information from the API on the IO Dispatcher
+            val response = withContext(Dispatchers.IO) {
+                countriesService.getCountries()
+            }
 
-        // Update the LiveData
-        countries.value = dummyData
+            // Back to the UI thread
 
-        // Clear any loading errors
-        countryLoadError.value = ""
+            // Check the response
+            if (response.isSuccessful) {
+                // When we have the response
 
-        // Stop the [loading] indication
-        loading.value = false
-    }
+                // Update the LiveData
+                countries.value = response.body()
+                // Clear any loading errors
+                countryLoadError.value = ""
+                // Stop the [loading] indication
+                loading.value = false
+            } else {
+                // When we have no response but an error
+                // Show the error message
+                onError("Error: ${response.message()}")
+            }
+        }
 
-    /**
-     * Returns Dummy List of country information for testing.
-     */
-    private fun generateDummyCountries(): List<Country> {
-        val countries = arrayListOf<Country>()
-        countries.add(Country("dummyCountry1", "dummyCapital1", ""))
-        countries.add(Country("dummyCountry2", "dummyCapital2", ""))
-        countries.add(Country("dummyCountry3", "dummyCapital3", ""))
-        countries.add(Country("dummyCountry4", "dummyCapital4", ""))
-        countries.add(Country("dummyCountry5", "dummyCapital5", ""))
-        countries.add(Country("dummyCountry1", "dummyCapital1", ""))
-        countries.add(Country("dummyCountry2", "dummyCapital2", ""))
-        countries.add(Country("dummyCountry3", "dummyCapital3", ""))
-        countries.add(Country("dummyCountry4", "dummyCapital4", ""))
-        countries.add(Country("dummyCountry5", "dummyCapital5", ""))
-        return countries
     }
 
     /**
@@ -74,6 +84,18 @@ class ListViewModel : ViewModel() {
         countryLoadError.value = message
         // Stop the [loading] indication
         loading.value = false
+    }
+
+    /**
+     * This method will be called when this ViewModel is no longer used and will be destroyed.
+     *
+     * It is useful when ViewModel observes some data and you need to clear this subscription to
+     * prevent a leak of this ViewModel.
+     */
+    override fun onCleared() {
+        super.onCleared()
+        // Clear any active Coroutine jobs
+        job?.cancel()
     }
 
 }

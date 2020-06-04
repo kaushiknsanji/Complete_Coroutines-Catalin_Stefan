@@ -1,6 +1,7 @@
 package com.kaushiknsanji.coroutinesretrofit.view
 
 import android.os.Bundle
+import android.text.TextUtils
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -52,7 +53,7 @@ class MainActivity : AppCompatActivity() {
     /**
      * Initializes [androidx.lifecycle.LiveData] observers.
      */
-    fun observeViewModel() {
+    private fun observeViewModel() {
 
         // Register an observer on the List of Countries to reload the adapter with the new content
         viewModel.countries.observe(this, Observer { countries ->
@@ -65,8 +66,11 @@ class MainActivity : AppCompatActivity() {
         })
 
         // Register an observer on the errors to display an error if present
-        viewModel.countryLoadError.observe(this, Observer { isError ->
-            list_error.visibility = if (isError == "") View.GONE else View.VISIBLE
+        viewModel.countryLoadError.observe(this, Observer { errorMessage ->
+            // Change the visibility of error TextView based on the message length
+            list_error.visibility = if (TextUtils.isEmpty(errorMessage)) View.GONE else View.VISIBLE
+            // Set/Clear the error text
+            list_error.text = errorMessage
         })
 
         // Register an observer on the loading progress to show/hide the download indicator
