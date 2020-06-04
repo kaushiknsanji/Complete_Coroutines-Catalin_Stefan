@@ -1,5 +1,7 @@
 package com.kaushiknsanji.coroutinesflowretrofit.model
 
+import com.google.gson.annotations.SerializedName
+
 /**
  * Data class of News Articles, embedded in the Remote API Responses.
  *
@@ -14,10 +16,21 @@ package com.kaushiknsanji.coroutinesflowretrofit.model
  * @author Kaushik N Sanji
  */
 data class NewsArticle(
+    @SerializedName("author")
     val author: String? = null,
+
+    @SerializedName("title")
     val title: String? = null,
+
+    @SerializedName("description")
     val description: String? = null,
+
+    @SerializedName("url")
     val url: String? = null,
+
+    @SerializedName("imageUrl")
     val urlToImage: String? = null,
+
+    @SerializedName("publishedAt")
     val publishedAt: String? = null
 )
