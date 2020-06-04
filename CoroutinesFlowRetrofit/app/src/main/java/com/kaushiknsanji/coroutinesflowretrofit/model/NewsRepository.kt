@@ -17,7 +17,7 @@ class NewsRepository {
 
     companion object {
         // Constant for the Base Url of the API
-        private const val BASE_URL = "https://raw.githubusercontent.com/DevTides/NewsApi/master"
+        private const val BASE_URL = "https://raw.githubusercontent.com/DevTides/NewsApi/master/"
 
         // Constant that signifies how often to publish a News Article to the client
         private const val NEWS_DELAY = 3000L

@@ -1,6 +1,7 @@
 package com.kaushiknsanji.coroutinesflowretrofit.view
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -52,7 +53,14 @@ class MainActivity : AppCompatActivity() {
     private fun setupObservers() {
         // Register an observer on the New News-Article to load the adapter with the same
         viewModel.newsArticle.observe(this, Observer { article ->
-
+            // Hide the loading spinner
+            loading_view.visibility = View.GONE
+            // Show the RecyclerView
+            newsList.visibility = View.VISIBLE
+            // Load this latest Article
+            newsListAdapter.onAddNewsItem(article)
+            // Scroll to top since the latest gets loaded at the top
+            newsList.smoothScrollToPosition(0)
         })
     }
 }

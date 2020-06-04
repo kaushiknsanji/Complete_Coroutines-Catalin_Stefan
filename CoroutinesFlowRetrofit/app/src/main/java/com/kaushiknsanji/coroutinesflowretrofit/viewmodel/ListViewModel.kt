@@ -1,7 +1,8 @@
 package com.kaushiknsanji.coroutinesflowretrofit.viewmodel
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.asLiveData
+import com.kaushiknsanji.coroutinesflowretrofit.model.NewsRepository
 
 /**
  * [ViewModel] subclass for [com.kaushiknsanji.coroutinesflowretrofit.view.MainActivity].
@@ -9,6 +10,6 @@ import androidx.lifecycle.ViewModel
  * @author Kaushik N Sanji
  */
 class ListViewModel : ViewModel() {
-    // LiveData for the new News-Article
-    val newsArticle = MutableLiveData<String>()
+    // LiveData for the new News-Article, loaded from a Coroutine Flow
+    val newsArticle = NewsRepository().getNewsArticles().asLiveData()
 }
