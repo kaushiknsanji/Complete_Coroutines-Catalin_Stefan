@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- MATCH CONSTRAINT Dimension used for ConstraintLayouts -->
+    <dimen name="match_constraint_0dp">0dp</dimen>
+
+    <!-- Common Width and Margins -->
+    <dimen name="std_width">300dp</dimen>
+    <dimen name="std_large_margin">64dp</dimen>
+    <dimen name="std_margin">8dp</dimen>
+
+</resources>

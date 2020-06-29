@@ -1,0 +1,32 @@
+<resources>
+    <!-- Name of the App -->
+    <string name="app_name">CoroutinesRoom</string>
+
+    <!-- ========================================== -->
+    <!-- STRINGS USED IN LOGIN AND SIGN-UP FRAGMENT -->
+    <!-- ========================================== -->
+    <string name="hint_login_sign_up_username">Username*</string>
+    <string name="hint_login_sign_up_password">Password*</string>
+
+    <!-- ============================== -->
+    <!-- STRINGS USED IN LOGIN FRAGMENT -->
+    <!-- ============================== -->
+    <string name="label_button_login">Login</string>
+    <string name="label_button_login_sign_up">Go To SignUp</string>
+
+    <!-- ============================= -->
+    <!-- STRINGS USED IN MAIN FRAGMENT -->
+    <!-- ============================= -->
+    <string name="title_text_main_header">You are now signed in as</string>
+    <string name="text_main_username">username</string>
+    <string name="label_button_main_log_out">Log Out</string>
+    <string name="label_button_main_delete_user">Delete User</string>
+
+    <!-- ================================ -->
+    <!-- STRINGS USED IN SIGN-UP FRAGMENT -->
+    <!-- ================================ -->
+    <string name="hint_sign_up_other_info">Other info*</string>
+    <string name="label_button_sign_up">Sign Up</string>
+    <string name="label_button_sign_up_login">Go To Login</string>
+
+</resources>

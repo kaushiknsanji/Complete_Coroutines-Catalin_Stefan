@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_navigation"
+    app:startDestination="@id/dest_sign_up">
+
+    <fragment
+        android:id="@+id/dest_sign_up"
+        android:name="com.kaushiknsanji.coroutinesroom.view.SignUpFragment"
+        android:label="Sign Up"
+        tools:layout="@layout/fragment_sign_up">
+        <action
+            android:id="@+id/to_dest_main"
+            app:destination="@id/dest_main"
+            app:enterAnim="@anim/fragment_close_enter" />
+        <action
+            android:id="@+id/to_dest_login"
+            app:destination="@id/dest_login"
+            app:enterAnim="@anim/fragment_open_enter" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_login"
+        android:name="com.kaushiknsanji.coroutinesroom.view.LoginFragment"
+        android:label="Login"
+        tools:layout="@layout/fragment_login">
+        <action
+            android:id="@+id/to_dest_main"
+            app:destination="@id/dest_main"
+            app:enterAnim="@anim/fragment_close_enter" />
+        <action
+            android:id="@+id/to_dest_sign_up"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popUpTo="@id/dest_sign_up" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dest_main"
+        android:name="com.kaushiknsanji.coroutinesroom.view.MainFragment"
+        android:label="Main"
+        tools:layout="@layout/fragment_main">
+        <action
+            android:id="@+id/to_dest_sign_up"
+            app:popEnterAnim="@anim/nav_default_pop_enter_anim"
+            app:popUpTo="@id/dest_sign_up" />
+    </fragment>
+
+</navigation>
