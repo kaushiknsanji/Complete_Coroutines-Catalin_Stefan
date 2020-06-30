@@ -28,5 +28,8 @@
     <string name="hint_sign_up_other_info">Other info*</string>
     <string name="label_button_sign_up">Sign Up</string>
     <string name="label_button_sign_up_login">Go To Login</string>
+    <string name="message_sign_up_empty_fields">Please fill all fields</string>
+    <string name="message_sign_up_done">SignUp completed</string>
+    <string name="error_sign_up_username_exists">Username already exists</string>
 
 </resources>

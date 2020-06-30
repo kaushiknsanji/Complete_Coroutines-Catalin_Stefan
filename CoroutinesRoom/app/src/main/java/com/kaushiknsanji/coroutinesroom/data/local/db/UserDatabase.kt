@@ -1,9 +1,11 @@
-package com.kaushiknsanji.coroutinesroom.model
+package com.kaushiknsanji.coroutinesroom.data.local.db
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.kaushiknsanji.coroutinesroom.data.local.db.dao.UserDao
+import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 
 /**
  * An abstract [RoomDatabase] class for exposing the Database access objects and managing the database.
@@ -39,8 +41,12 @@ abstract class UserDatabase : RoomDatabase() {
          *
          * @param context [Context] to create the [UserDatabase] instance for.
          */
-        operator fun invoke(context: Context): UserDatabase = instance ?: synchronized(LOCK) {
-            instance ?: buildDatabase(context).also {
+        operator fun invoke(context: Context): UserDatabase = instance
+            ?: synchronized(LOCK) {
+                instance
+                    ?: buildDatabase(
+                        context
+                    ).also {
                 // Save the instance built
                 instance = it
             }

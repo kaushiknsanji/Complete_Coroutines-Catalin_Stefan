@@ -1,4 +1,6 @@
-package com.kaushiknsanji.coroutinesroom.model
+package com.kaushiknsanji.coroutinesroom.data.model
+
+import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 
 /**
  * Object class to save and retrieve the state of the logged-in User, from anywhere in the app.
@@ -26,7 +28,7 @@ object LoginState {
      */
     fun login(user: User) {
         // Save the user information
-        this.user = user
+        LoginState.user = user
         // Set to true when a user had logged-in
         isLoggedIn = true
     }
