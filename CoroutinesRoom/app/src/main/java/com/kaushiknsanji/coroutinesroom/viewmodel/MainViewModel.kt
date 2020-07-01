@@ -44,10 +44,16 @@ class MainViewModel(
     // Instance of DatabaseRepository to communicate with the database
     private val databaseRepository: DatabaseRepository by lazy { DatabaseRepository(getApplication()) }
 
-    // LiveData for logged-in user information
+    // LiveData for logged-in user data
     val loggedInUser: LiveData<User> = liveData {
         // Emit the current logged-in user if present
         databaseRepository.getCurrentUser()?.let { emit(it) }
+    }
+
+    // LiveData for the Info text of the logged-in user
+    val loggedInUserInfoText: LiveData<String?> = liveData {
+        // Emit the current logged-in user's Info text
+        emit(databaseRepository.getCurrentUser()?.info)
     }
 
     /**

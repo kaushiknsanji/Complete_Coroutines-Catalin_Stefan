@@ -31,6 +31,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_main_header" />
 
+    <TextView
+        android:id="@+id/text_main_info"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/std_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="italic"
+        app:layout_constrainedWidth="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_main_username"
+        tools:text="@string/text_main_info_placeholder" />
+
     <Button
         android:id="@+id/btn_main_log_out"
         style="@style/ButtonStyle"
@@ -40,7 +53,7 @@
         android:text="@string/label_button_main_log_out"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_main_username" />
+        app:layout_constraintTop_toBottomOf="@+id/text_main_info" />
 
     <Button
         android:id="@+id/btn_main_delete_user"

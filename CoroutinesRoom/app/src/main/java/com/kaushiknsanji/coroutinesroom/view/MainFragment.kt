@@ -14,6 +14,7 @@ import com.kaushiknsanji.coroutinesroom.R
 import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 import com.kaushiknsanji.coroutinesroom.utils.common.observeEvent
 import com.kaushiknsanji.coroutinesroom.utils.common.observeNonNull
+import com.kaushiknsanji.coroutinesroom.utils.common.observeNull
 import com.kaushiknsanji.coroutinesroom.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -85,6 +86,18 @@ class MainFragment : Fragment() {
         // on the corresponding textView
         viewModel.loggedInUser.observeNonNull(viewLifecycleOwner) { user: User ->
             text_main_username.text = user.username
+        }
+
+        // Register an observer on InfoText LiveData to set the corresponding textView
+        viewModel.loggedInUserInfoText.observeNull(viewLifecycleOwner) { infoText: String? ->
+            if (infoText.isNullOrBlank()) {
+                // When Info is not available or blank, hide the TextView
+                text_main_info.visibility = View.GONE
+            } else {
+                // When Info is available, show the TextView and set the text
+                text_main_info.visibility = View.VISIBLE
+                text_main_info.text = getString(R.string.text_main_info_placeholder, infoText)
+            }
         }
 
         // Register an observer for SignUp Fragment launch events
