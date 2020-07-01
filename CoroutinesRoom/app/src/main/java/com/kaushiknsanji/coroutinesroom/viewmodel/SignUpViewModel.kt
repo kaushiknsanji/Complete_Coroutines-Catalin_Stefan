@@ -6,7 +6,6 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kaushiknsanji.coroutinesroom.R
-import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 import com.kaushiknsanji.coroutinesroom.data.repository.DatabaseRepository
 import com.kaushiknsanji.coroutinesroom.utils.common.Event
 import kotlinx.coroutines.CoroutineExceptionHandler
@@ -78,8 +77,7 @@ class SignUpViewModel(
             // the sign-up in the background
             viewModelScope.launch(Dispatchers.IO + databaseExceptionHandler) {
                 // Check if there is an existing user with the same username
-                val existingUser: User? = databaseRepository.getUserByName(username)
-                if (existingUser != null) {
+                if (databaseRepository.getUserByName(username) != null) {
                     // When there is a User with the same username
                     // Show the error message to indicate that the given username is already taken
                     errorStringId.postValue(Event(R.string.error_sign_up_username_exists))

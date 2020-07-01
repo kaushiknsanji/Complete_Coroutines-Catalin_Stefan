@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
@@ -64,7 +66,13 @@ class LoginFragment : Fragment() {
         setupObservers()
 
         // Register Click listener on Login button
-        btn_login.setOnClickListener { viewModel.onLogin() }
+        btn_login.setOnClickListener {
+            // Delegate to the ViewModel to handle
+            viewModel.onLogin(
+                edit_login_username.text.toString(),
+                edit_login_password.text.toString()
+            )
+        }
 
         // Register Click listener on "Go To SignUp" button
         btn_login_sign_up.setOnClickListener { viewModel.onGoToSignUp() }
@@ -85,6 +93,34 @@ class LoginFragment : Fragment() {
             findNavController().navigate(LoginFragmentDirections.toDestSignUp())
         }
 
+        // Register an observer for message-id LiveData, to show a Toast for the
+        // corresponding message from String resources
+        viewModel.messageStringId.observeEvent(viewLifecycleOwner) { messageResId: Int ->
+            showMessage(messageResId)
+        }
+
+        // Register an observer for error LiveData, to show a Toast for the error message
+        viewModel.error.observeEvent(viewLifecycleOwner) { errorMessage: String ->
+            showMessage("Error: $errorMessage")
+        }
+
+        // Register an observer for error-id LiveData, to show a Toast for the
+        // corresponding error message from String resources
+        viewModel.errorStringId.observeEvent(viewLifecycleOwner) { errorResId: Int ->
+            showMessage("Error: ${getString(errorResId)}")
+        }
+
     }
+
+    /**
+     * Displays a [android.widget.Toast] for the [message] string.
+     */
+    private fun showMessage(message: String) =
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+    /**
+     * Displays a [android.widget.Toast] for the message Resource id [messageResId].
+     */
+    private fun showMessage(@StringRes messageResId: Int) = showMessage(getString(messageResId))
 
 }

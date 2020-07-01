@@ -13,6 +13,10 @@
     <!-- ============================== -->
     <string name="label_button_login">Login</string>
     <string name="label_button_login_sign_up">Go To SignUp</string>
+    <string name="message_login_empty_fields">Please fill all fields</string>
+    <string name="error_login_username_invalid">User not found</string>
+    <string name="error_login_password_invalid">Incorrect Password</string>
+    <string name="message_login_done">Login successful</string>
 
     <!-- ============================= -->
     <!-- STRINGS USED IN MAIN FRAGMENT -->

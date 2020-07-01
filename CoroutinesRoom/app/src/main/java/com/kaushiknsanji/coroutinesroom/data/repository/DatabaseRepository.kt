@@ -1,6 +1,7 @@
 package com.kaushiknsanji.coroutinesroom.data.repository
 
 import android.content.Context
+import com.kaushiknsanji.coroutinesroom.R
 import com.kaushiknsanji.coroutinesroom.data.local.db.UserDatabase
 import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 import com.kaushiknsanji.coroutinesroom.data.model.LoginState
@@ -43,7 +44,7 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
      *
      * @return [Long] value of the id of the [user] inserted/replaced.
      */
-    suspend fun insertUser(user: User): Long = userDatabase.userDao().insertUser(user)
+    private suspend fun insertUser(user: User): Long = userDatabase.userDao().insertUser(user)
 
     /**
      * Retrieves [User] data identified by the given [username] from the "users" table.
@@ -58,7 +59,7 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
      *
      * @return [Int] value of the number of users deleted successfully.
      */
-    suspend fun deleteUserById(id: Long): Int = userDatabase.userDao().deleteUserById(id)
+    private suspend fun deleteUserById(id: Long): Int = userDatabase.userDao().deleteUserById(id)
 
     /**
      * Performs user sign-up and saves the created [User] information in the database.
@@ -76,7 +77,7 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
                 // Save the Id generated, in the same User object
                 this.id = id
                 // Save this logged-in user information (in memory)
-                LoginState.login(this)
+                saveNewUser(this)
             }
         }
 
@@ -91,9 +92,14 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
     fun logOutUser() = LoginState.logOut()
 
     /**
+     * Saves the [user] information of the new logged-in [User].
+     */
+    private fun saveNewUser(user: User): Unit = LoginState.login(user)
+
+    /**
      * Performs delete operation of the logged-in [User] from the the "users" table.
      *
-     * @return `true` if the user was present in memory and deleted successfully; `false` otherwise
+     * @return `true` if the user was present in memory and deleted successfully; `false` otherwise.
      */
     suspend fun deleteCurrentUser(): Boolean =
         getCurrentUser()?.let { user: User ->
@@ -105,4 +111,27 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
             } ?: false // Returning false when delete was unsuccessful
         } ?: false // Returning false when there was no user in memory to delete
 
+    /**
+     * Performs Authentication and Login of a [User] for the entered [username] and [password].
+     *
+     * @return Returns a [Pair] containing an Authentication state [Boolean] and an [Int]
+     * pointing to the string resource of a message to be shown. Authentication state is `true`
+     * if there is a [User] with the same [username], and the entered [password]
+     * matches; `false` otherwise.
+     */
+    suspend fun authenticateUser(username: String, password: String): Pair<Boolean, Int> =
+        getUserByName(username)?.let { user: User ->
+            // When there is an existing User with the same username
+            // Try and authenticate the user with the password entered
+            (user.passwordHash == password.hashCode()).takeIf { it }?.let {
+                // When user entered password is correct
+
+                // Save this logged-in user information (in memory)
+                saveNewUser(user)
+                // Returning with true when the password matches
+                (true to R.string.message_login_done)
+            }
+                ?: (false to R.string.error_login_password_invalid) // Returning with false when the password is incorrect
+        }
+            ?: (false to R.string.error_login_username_invalid) // Returning with false when there is no User for the given username
 }
