@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/dest_sign_up"
         android:name="com.kaushiknsanji.coroutinesroom.view.SignUpFragment"
-        android:label="Sign Up"
+        android:label="@string/title_sign_up_toolbar"
         tools:layout="@layout/fragment_sign_up">
         <action
             android:id="@+id/to_dest_main"
@@ -23,7 +23,7 @@
     <fragment
         android:id="@+id/dest_login"
         android:name="com.kaushiknsanji.coroutinesroom.view.LoginFragment"
-        android:label="Login"
+        android:label="@string/title_login_toolbar"
         tools:layout="@layout/fragment_login">
         <action
             android:id="@+id/to_dest_main"
@@ -38,7 +38,7 @@
     <fragment
         android:id="@+id/dest_main"
         android:name="com.kaushiknsanji.coroutinesroom.view.MainFragment"
-        android:label="Main"
+        android:label="@string/title_main_toolbar"
         tools:layout="@layout/fragment_main">
         <action
             android:id="@+id/to_dest_sign_up"
