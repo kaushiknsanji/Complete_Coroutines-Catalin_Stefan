@@ -4,6 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:paddingTop="@dimen/std_large_padding"
+    android:paddingBottom="@dimen/std_large_padding"
     android:background="@color/bkg_green"
     tools:context=".view.SignUpFragment">
 
@@ -11,7 +13,7 @@
         android:id="@+id/edit_sign_up_username"
         android:layout_width="@dimen/std_width"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/std_large_margin"
+        android:layout_marginTop="@dimen/std_margin"
         android:ems="10"
         android:hint="@string/hint_login_sign_up_username"
         android:inputType="text"

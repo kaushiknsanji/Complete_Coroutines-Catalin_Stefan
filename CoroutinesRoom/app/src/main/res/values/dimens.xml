@@ -6,6 +6,7 @@
     <!-- Common Width and Margins -->
     <dimen name="std_width">300dp</dimen>
     <dimen name="std_large_margin">64dp</dimen>
+    <dimen name="std_large_padding">64dp</dimen>
     <dimen name="std_margin">8dp</dimen>
 
 </resources>
