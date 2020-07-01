@@ -4,11 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.annotation.StringRes
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import com.kaushiknsanji.coroutinesroom.R
+import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 import com.kaushiknsanji.coroutinesroom.utils.common.observeEvent
+import com.kaushiknsanji.coroutinesroom.utils.common.observeNonNull
 import com.kaushiknsanji.coroutinesroom.viewmodel.MainViewModel
 import kotlinx.android.synthetic.main.fragment_main.*
 
@@ -76,11 +81,61 @@ class MainFragment : Fragment() {
      */
     private fun setupObservers() {
 
+        // Register an observer on Logged-in User LiveData to set the Username
+        // on the corresponding textView
+        viewModel.loggedInUser.observeNonNull(viewLifecycleOwner) { user: User ->
+            text_main_username.text = user.username
+        }
+
         // Register an observer for SignUp Fragment launch events
         viewModel.launchSignUp.observeEvent(viewLifecycleOwner) {
             findNavController().navigate(MainFragmentDirections.toDestSignUp())
         }
 
+        // Register an observer for Delete User Confirmation dialog launch events
+        viewModel.launchConfirmDelete.observeEvent(viewLifecycleOwner) {
+            // Create and show the dialog only when this fragment is still attached to its activity
+            activity?.let {
+                AlertDialog.Builder(it)
+                    .setTitle(R.string.title_dialog_main_confirm_delete_user)
+                    .setPositiveButton(R.string.label_dialog_main_confirm_delete_user_yes) { _, _ ->
+                        // On Confirmation, delegate to the ViewModel to handle
+                        viewModel.onConfirmDeleteUser()
+                    }
+                    .setNegativeButton(R.string.label_dialog_main_confirm_delete_user_cancel, null)
+                    .create()
+                    .show()
+            }
+        }
+
+        // Register an observer for message-id LiveData, to show a Toast for the
+        // corresponding message from String resources
+        viewModel.messageStringId.observeEvent(viewLifecycleOwner) { messageResId: Int ->
+            showMessage(messageResId)
+        }
+
+        // Register an observer for error LiveData, to show a Toast for the error message
+        viewModel.error.observeEvent(viewLifecycleOwner) { errorMessage: String ->
+            showMessage("Error: $errorMessage")
+        }
+
+        // Register an observer for error-id LiveData, to show a Toast for the
+        // corresponding error message from String resources
+        viewModel.errorStringId.observeEvent(viewLifecycleOwner) { errorResId: Int ->
+            showMessage("Error: ${getString(errorResId)}")
+        }
+
     }
+
+    /**
+     * Displays a [android.widget.Toast] for the [message] string.
+     */
+    private fun showMessage(message: String) =
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
+
+    /**
+     * Displays a [android.widget.Toast] for the message Resource id [messageResId].
+     */
+    private fun showMessage(@StringRes messageResId: Int) = showMessage(getString(messageResId))
 
 }

@@ -90,4 +90,19 @@ class DatabaseRepository private constructor(private val userDatabase: UserDatab
      */
     fun logOutUser() = LoginState.logOut()
 
+    /**
+     * Performs delete operation of the logged-in [User] from the the "users" table.
+     *
+     * @return `true` if the user was present in memory and deleted successfully; `false` otherwise
+     */
+    suspend fun deleteCurrentUser(): Boolean =
+        getCurrentUser()?.let { user: User ->
+            // Delete the active user if any
+            deleteUserById(user.id).takeIf { it > 0 }?.let {
+                // When deleted successfully, invalidate the user in memory and return true
+                logOutUser()
+                true
+            } ?: false // Returning false when delete was unsuccessful
+        } ?: false // Returning false when there was no user in memory to delete
+
 }

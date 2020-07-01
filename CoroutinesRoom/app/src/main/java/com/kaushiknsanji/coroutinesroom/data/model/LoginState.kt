@@ -3,7 +3,7 @@ package com.kaushiknsanji.coroutinesroom.data.model
 import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 
 /**
- * Object class to save and retrieve the state of the logged-in User, from anywhere in the app.
+ * Singleton class to save and retrieve the state of the logged-in User.
  *
  * @author Kaushik N Sanji
  */

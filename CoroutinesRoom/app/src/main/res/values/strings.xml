@@ -21,6 +21,12 @@
     <string name="text_main_username">username</string>
     <string name="label_button_main_log_out">Log Out</string>
     <string name="label_button_main_delete_user">Delete User</string>
+    <string name="title_dialog_main_confirm_delete_user">Delete User?</string>
+    <string name="label_dialog_main_confirm_delete_user_yes">Yes</string>
+    <string name="label_dialog_main_confirm_delete_user_cancel">Cancel</string>
+    <string name="message_main_sign_out_done">Signed out</string>
+    <string name="message_main_user_delete_done">User deleted</string>
+    <string name="error_main_user_delete_failure">Current User could not be deleted</string>
 
     <!-- ================================ -->
     <!-- STRINGS USED IN SIGN-UP FRAGMENT -->
