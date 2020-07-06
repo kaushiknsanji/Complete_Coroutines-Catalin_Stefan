@@ -1,6 +1,6 @@
 # Complete Kotlin Coroutines - Catalin Stefan
 
-My Solution repository for the [course on Kotlin Coroutines](https://www.udemy.com/course/coroutines/) by [Catalin Stefan](https://www.udemy.com/user/catalinstefan2/).
+My Solution repository for the [course on Kotlin Coroutines](https://www.udemy.com/course/coroutines/) taught by [Catalin Stefan](https://www.udemy.com/user/catalinstefan2/).
 
 ## What one will learn
 * Theory and Fundamentals of Coroutines
@@ -33,7 +33,10 @@ My Solution repository for the [course on Kotlin Coroutines](https://www.udemy.c
 * Coroutines and Coroutines Flow with Retrofit
 * Coroutines with Room
 
-## Prerequisite
+## Getting Started
+Android Studio 3.6+
+
+### Prerequisite
 * Android development knowledge with Lifecycle components like ViewModels and LiveData
 * Kotlin
 * Retrofit
@@ -49,13 +52,14 @@ My Solution repository for the [course on Kotlin Coroutines](https://www.udemy.c
 		* **[CoroutinesRetrofit](https://github.com/kaushiknsanji/Complete_Coroutines-Catalin_Stefan/tree/master/CoroutinesRetrofit)**
 			* This project shows how to download a list of Country information from a URL/endpoint in the background via a Coroutine, and then display it on a RecyclerView.
 		* **[CoroutinesRoom](https://github.com/kaushiknsanji/Complete_Coroutines-Catalin_Stefan/tree/master/CoroutinesRoom)**
-			* This project implements the **First Time User Experience** using **Room** as the backend to onboard and authenticate users.
+			* This project implements the **First Time User Experience** using **Room** as its backend to onboard and authenticate users.
 			* Onboarding and Authentication of Users is done by communicating with the Room database in the background via a Coroutine.
 		* **[CoroutinesFlowRetrofit](https://github.com/kaushiknsanji/Complete_Coroutines-Catalin_Stefan/tree/master/CoroutinesFlowRetrofit)**
-			* This project shows how to download a list of News items from a URL/endpoint in the background via Coroutine Flows, and then emits each News item with a delay in-between to simulate a News Ticker.
+			* This project shows how to download a list of News items from a URL/endpoint in the background via Coroutine Flows, and then emit each News item with a delay in-between, in order to simulate a News Ticker.
 			* The above Flow of News items is converted into a LiveData to show the result in a RecyclerView when the registered observer gets the update.
-* **[idea_practice]()**
-	* This branch contains **[]()** project with easy to understand codes on each of the Coroutines concepts.
+* **[idea_practice](https://github.com/kaushiknsanji/Complete_Coroutines-Catalin_Stefan/tree/idea_practice)**
+	* This branch contains **[CoroutineConcepts](https://github.com/kaushiknsanji/Complete_Coroutines-Catalin_Stefan/tree/idea_practice/CoroutineConcepts)** project with easy to understand codes to establish each of the Coroutines concepts.
+	* This is a separate [IntelliJ IDEA](https://www.jetbrains.com/idea/download) project, hence it deserves a separate branch.
 
 ## Udemy Certificate
 <a href="https://www.udemy.com/certificate/UC-143a922d-65c3-4f6a-9957-6c92dd00232c/">
