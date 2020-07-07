@@ -1,5 +1,8 @@
 package com.kaushiknsanji.coroutinesflowretrofit.view
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -84,6 +87,40 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
         private val title = view.newsTitle
         private val publishedAt = view.newsPublishedAt
 
+        // Saves the URL of the News article
+        private var url: String? = null
+
+        init {
+            // Register a click listener on the Item View
+            view.setOnClickListener { itemView ->
+                if (adapterPosition > RecyclerView.NO_POSITION) {
+                    // When the Item View is still valid
+
+                    // Launch the News article in the browser if the URL is present
+                    url?.let {
+                        openLink(itemView.context, it)
+                    }
+                }
+            }
+        }
+
+        /**
+         * Method that opens a system Browser application to load the [webUrl] given.
+         *
+         * @param context [Context] of the calling Item View
+         */
+        private fun openLink(context: Context, webUrl: String) {
+            // Parsing the URL
+            val webPageUri = Uri.parse(webUrl)
+            // Creating an ACTION_VIEW Intent with the URI
+            val webIntent = Intent(Intent.ACTION_VIEW, webPageUri)
+            // Checking if there is an Activity that accepts the Intent
+            if (webIntent.resolveActivity(context.packageManager) != null) {
+                // Launching the corresponding Activity and passing it the Intent
+                context.startActivity(webIntent)
+            }
+        }
+
         /**
          * Method that binds the views with the [newsItem] data at the position.
          */
@@ -96,6 +133,8 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
             title.text = newsItem.title
             // Bind the published date
             publishedAt.text = newsItem.publishedAt
+            // Save the URL of the News article
+            this.url = newsItem.url
         }
     }
 }
