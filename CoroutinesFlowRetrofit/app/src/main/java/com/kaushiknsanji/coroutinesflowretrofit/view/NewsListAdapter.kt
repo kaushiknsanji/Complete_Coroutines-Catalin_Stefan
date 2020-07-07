@@ -62,6 +62,18 @@ class NewsListAdapter : RecyclerView.Adapter<NewsListAdapter.NewsItemViewHolder>
     }
 
     /**
+     * Method to preload this [NewsListAdapter] with the previously downloaded [list] of [NewsArticle]s.
+     */
+    fun preLoadList(list: List<NewsArticle>) {
+        if (list.isNotEmpty()) {
+            // When we have some previously downloaded list of articles,
+            // clear current list and load the new list
+            newsItems.clear()
+            newsItems.addAll(list)
+        }
+    }
+
+    /**
      * [RecyclerView.ViewHolder] subclass for caching view components of the
      * template item view 'R.layout.item_news_article'.
      */

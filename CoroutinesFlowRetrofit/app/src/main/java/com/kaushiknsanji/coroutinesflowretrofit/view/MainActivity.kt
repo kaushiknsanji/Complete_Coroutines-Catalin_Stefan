@@ -7,6 +7,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kaushiknsanji.coroutinesflowretrofit.R
+import com.kaushiknsanji.coroutinesflowretrofit.model.NewsArticle
 import com.kaushiknsanji.coroutinesflowretrofit.viewmodel.ListViewModel
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -36,6 +37,8 @@ class MainActivity : AppCompatActivity() {
 
         // Get the Activity's ViewModel instance
         viewModel = ViewModelProvider(this).get(ListViewModel::class.java)
+        // Notify the ViewModel that the activity is being created
+        viewModel.onCreate()
 
         // Initialize RecyclerView with its Layout Manager and Adapter
         newsList.apply {
@@ -62,5 +65,12 @@ class MainActivity : AppCompatActivity() {
             // Scroll to top since the latest gets loaded at the top
             newsList.smoothScrollToPosition(0)
         })
+
+        // Register an observer on the previously downloaded list of News Articles, to reset the adapter with the same
+        viewModel.newsArticlesPreLoad.observe(
+            this,
+            Observer { newsArticlesList: List<NewsArticle> ->
+                newsListAdapter.preLoadList(newsArticlesList)
+            })
     }
 }
