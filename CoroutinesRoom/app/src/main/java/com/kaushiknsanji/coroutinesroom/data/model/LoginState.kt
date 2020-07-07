@@ -10,10 +10,11 @@ import com.kaushiknsanji.coroutinesroom.data.local.db.entity.User
 object LoginState {
 
     // Boolean that states if the user is logged in or not
-    var isLoggedIn = false
+    private var isLoggedIn = false
 
     // Saves the reference to the logged-in user
     var user: User? = null
+        private set
 
     /**
      * Called to clear out the logged-in user information, when the user signs-out.
